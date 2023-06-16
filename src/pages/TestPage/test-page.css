@@ -1,0 +1,26 @@
+.test-page {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10vh;
+}
+
+.test-page button,
+.test-page input {
+  font-size: 20px;
+}
+
+.test-page__mt {
+  margin-top: 4vmin;
+}
+
+.test-page__sender {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 4vmin;
+  width: 80vw;
+}
+
+.test-page__sender > *:not(:first-child) {
+  margin-top: 1vmin;
+}
