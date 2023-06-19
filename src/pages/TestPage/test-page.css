@@ -24,3 +24,19 @@
 .test-page__sender > *:not(:first-child) {
   margin-top: 1vmin;
 }
+
+.test-page__quote {
+  position: fixed;
+  bottom: 5px;
+  left: 5px;
+  background-color: #403d3d;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: calc(10px + 1vmin);
+}
+
+.test-page__quote ul {
+  margin: 0;
+}

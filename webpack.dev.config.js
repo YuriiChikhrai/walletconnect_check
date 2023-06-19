@@ -8,6 +8,8 @@ const webpack = require("webpack");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+const { dependencies } = require("./package.json");
+
 module.exports = {
   devtool: "eval-source-map",
   devServer: {
@@ -105,6 +107,9 @@ module.exports = {
     new webpack.EnvironmentPlugin({
       WC_ID: "",
       WALLET_ADDRESS: "",
+      VERSION_VIEM: dependencies["viem"].replace("^", ""),
+      VERSION_WAGMI: dependencies["wagmi"].replace("^", ""),
+      VERSION_WC: dependencies["@web3modal/ethereum"].replace("^", ""),
     }),
   ],
   optimization: {

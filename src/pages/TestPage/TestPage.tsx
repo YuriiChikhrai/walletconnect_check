@@ -98,6 +98,15 @@ export const TestPage: FC = () => {
           )}
         </div>
       )}
+
+      <div className="test-page__quote">
+        <span>Versions:</span>
+        <ul>
+          <li>viem: {process.env.VERSION_VIEM}</li>
+          <li>wagmi: {process.env.VERSION_WAGMI}</li>
+          <li>walletconnect: {process.env.VERSION_WC}</li>
+        </ul>
+      </div>
     </div>
   );
 };
