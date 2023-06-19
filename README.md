@@ -6,7 +6,7 @@
 ## Packages used
  - `wagmi` / `@wagmi/core` v1.2.0
  - `viem` v1.0.7
- - `@web3modal/ethereum` / `@web3modal/react` v2.4.7
+ - `@web3modal/ethereum` / `@web3modal/react` v2.4.4
  - `react` v16.14.0
  - `webpack` v5.87.0
  - `typescript` v5.1.3
