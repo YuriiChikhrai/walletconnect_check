@@ -15,10 +15,6 @@ export const CryptoSendTokens: FC<{
   const startTimeRef = useRef<number | undefined>();
   const { address } = useAccount();
 
-  /*
-  parseAbi(["function decimals() view returns (uint256)"])
-  */
-
   const { config } = usePrepareContractWrite({
     ...usdtContract,
     chainId,
@@ -29,13 +25,11 @@ export const CryptoSendTokens: FC<{
   const { writeAsync, reset } = useContractWrite(config);
 
   useEffect(() => {
-    debugger;
     if (writeAsync && value && startTimeRef.current !== startTime) {
       reset();
 
       startTimeRef.current = startTime;
 
-      debugger;
       writeAsync()
         .then(async ({ hash }) => {
           alert(`Transaction successful: ${hash}`);
