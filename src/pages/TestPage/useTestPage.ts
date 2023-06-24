@@ -1,11 +1,13 @@
-import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
+import { MouseEvent, useCallback, useContext, useEffect, useRef, useState } from "react";
 
 import { useWeb3Modal } from "@web3modal/react";
 import { parseEther } from "viem";
 import { useAccount, useDisconnect, useSignMessage } from "wagmi";
-import { mainnet } from "wagmi/chains";
+
+import { CryptoContextProvider } from "../../context/CryptoContext/CryptoContextProvider";
 
 export const useTestPage = () => {
+  const { chain } = useContext(CryptoContextProvider);
   const { open } = useWeb3Modal();
   const { connector, isConnected, isDisconnected, address, isConnecting } = useAccount();
   const { disconnectAsync } = useDisconnect();
@@ -79,7 +81,7 @@ export const useTestPage = () => {
       amount,
       smartContract,
       startTime: Date.now(),
-      chainId: mainnet.id,
+      chainId: chain.id,
     });
   }, []);
 

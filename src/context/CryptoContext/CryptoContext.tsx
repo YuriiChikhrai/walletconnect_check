@@ -2,12 +2,13 @@ import { FC, useEffect, useMemo, useState } from "react";
 
 import { EthereumClient, w3mConnectors, w3mProvider } from "@web3modal/ethereum";
 import { Web3Modal } from "@web3modal/react";
+import type { Chain } from "viem";
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
-import { bsc, goerli, mainnet } from "wagmi/chains";
+import { goerli, mainnet } from "wagmi/chains";
 
 import { CryptoContextProvider } from "./CryptoContextProvider";
 
-const chains = [mainnet, bsc, goerli];
+const chains = [mainnet, goerli];
 
 const wallet_connect = {
   id: process.env.WC_ID,
@@ -28,8 +29,15 @@ const wallet_connect = {
   ],
 };
 
+const getDefaultChain = () => {
+  const savedId = parseInt(localStorage.getItem("chain") || `${mainnet.id}`);
+  const chain = chains.find((c) => c.id === savedId);
+  return chain || mainnet;
+};
+
 export const CryptoContext: FC = ({ children }) => {
   const [wcVersion, setWcVersion] = useState<1 | 2>(parseInt(localStorage.getItem("wcVersion") || "1") as 1 | 2);
+  const [chain, setChain] = useState<Chain>(getDefaultChain());
 
   const { wagmiConfig, ethereumClient } = useMemo(() => {
     if (!wallet_connect?.id) {
@@ -52,10 +60,14 @@ export const CryptoContext: FC = ({ children }) => {
     localStorage.setItem("wcVersion", `${wcVersion}`);
   }, [wcVersion]);
 
+  useEffect(() => {
+    localStorage.setItem("chain", `${chain.id}`);
+  }, [chain]);
+
   if (!wagmiConfig || !ethereumClient) return <>{children}</>;
 
   return (
-    <CryptoContextProvider.Provider value={{ wcVersion, setWcVersion }}>
+    <CryptoContextProvider.Provider value={{ wcVersion, setWcVersion, chain, chains, setChain }}>
       {!wallet_connect?.id || !ethereumClient ? (
         <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
       ) : (
@@ -66,7 +78,7 @@ export const CryptoContext: FC = ({ children }) => {
             projectId={wallet_connect.id}
             enableNetworkView={false}
             ethereumClient={ethereumClient}
-            defaultChain={mainnet}
+            defaultChain={chain}
             explorerRecommendedWalletIds={wallet_connect.wallets}
             explorerExcludedWalletIds="ALL"
           />

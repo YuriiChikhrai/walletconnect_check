@@ -8,7 +8,7 @@ import { useTestPage } from "./useTestPage";
 import "./test-page.css";
 
 export const TestPage: FC = () => {
-  const { wcVersion, setWcVersion } = useContext(CryptoContextProvider);
+  const { wcVersion, setWcVersion, chain, chains, setChain } = useContext(CryptoContextProvider);
   const {
     handleClickDisconnect,
     handleClickLogin,
@@ -43,6 +43,28 @@ export const TestPage: FC = () => {
       >
         <option value={1}>1</option>
         <option value={2}>2</option>
+      </select>
+
+      <label htmlFor="wc-chain-select">Choose chain:</label>
+      <select
+        id="wc-chain-select"
+        onChange={(e) => {
+          const selectedChain = parseInt(e.currentTarget.value);
+
+          handleClickDisconnect().finally(() => {
+            setChain(chains.find(({ id }) => id === selectedChain) || chains[0]);
+            setTimeout(() => {
+              window.location.reload();
+            }, 0);
+          });
+        }}
+        value={chain.id}
+      >
+        {chains.map(({ id, name }) => (
+          <option key={id} value={id}>
+            {name}
+          </option>
+        ))}
       </select>
 
       {transactionData?.smartContract ? (
@@ -84,7 +106,7 @@ export const TestPage: FC = () => {
                   ref={inputRef}
                 />
                 <button onClick={handleClickSendGWei}>Check send 10 gwei</button>
-                <button onClick={handleClickSendTokens}>Check send 0.000001 USDT</button>
+                <button onClick={handleClickSendTokens}>Check send 1 {chain.id === 1 ? "USDT" : "LINK"}</button>
               </div>
             </>
           ) : (

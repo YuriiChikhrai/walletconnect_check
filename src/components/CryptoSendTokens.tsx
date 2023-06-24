@@ -2,8 +2,10 @@ import { FC, memo, useEffect, useRef } from "react";
 
 import { fetchToken } from "@wagmi/core";
 import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
+import { mainnet } from "wagmi/chains";
 
-import { usdtContract } from "./contract";
+import { linkContract } from "./contract_goerli_link";
+import { usdtContract } from "./contract_mainnet_usdt";
 
 export const CryptoSendTokens: FC<{
   to: string;
@@ -16,7 +18,7 @@ export const CryptoSendTokens: FC<{
   const { address } = useAccount();
 
   const { config } = usePrepareContractWrite({
-    ...usdtContract,
+    ...(chainId === mainnet.id ? usdtContract : linkContract),
     chainId,
     args: [to as `0x${string}`, value],
     functionName: "transfer",
