@@ -48,7 +48,7 @@ export const CryptoContext: FC = ({ children }) => {
     const { publicClient } = configureChains(chains, [w3mProvider({ projectId: wallet_connect.id })]);
     const wagmiConfig = createConfig({
       autoConnect: true,
-      connectors: w3mConnectors({ projectId: wallet_connect.id, version: wcVersion, chains }),
+      connectors: w3mConnectors({ projectId: wallet_connect.id, chains }),
       publicClient,
     });
     const ethereumClient = new EthereumClient(wagmiConfig, chains);
@@ -67,7 +67,7 @@ export const CryptoContext: FC = ({ children }) => {
   if (!wagmiConfig || !ethereumClient) return <>{children}</>;
 
   return (
-    <CryptoContextProvider.Provider value={{ wcVersion, setWcVersion, chain, chains, setChain }}>
+    <CryptoContextProvider.Provider value={{ chain, chains, setChain }}>
       {!wallet_connect?.id || !ethereumClient ? (
         <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
       ) : (

@@ -8,7 +8,7 @@ import { useTestPage } from "./useTestPage";
 import "./test-page.css";
 
 export const TestPage: FC = () => {
-  const { wcVersion, setWcVersion, chain, chains, setChain } = useContext(CryptoContextProvider);
+  const { chain, chains, setChain } = useContext(CryptoContextProvider);
   const {
     handleClickDisconnect,
     handleClickLogin,
@@ -26,24 +26,6 @@ export const TestPage: FC = () => {
   return (
     <div className="test-page">
       <h2>WalletConnect checker</h2>
-
-      <label htmlFor="wc-version-select">Choose version:</label>
-      <select
-        id="wc-version-select"
-        onChange={(e) => {
-          const version = parseInt(e.currentTarget.value) as 1 | 2;
-          handleClickDisconnect().finally(() => {
-            setWcVersion(version);
-            setTimeout(() => {
-              window.location.reload();
-            }, 0);
-          });
-        }}
-        value={wcVersion}
-      >
-        <option value={1}>1</option>
-        <option value={2}>2</option>
-      </select>
 
       <label htmlFor="wc-chain-select">Choose chain:</label>
       <select
