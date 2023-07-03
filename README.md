@@ -1,15 +1,14 @@
 # Repo to test integration WalletConnect with crypto wallets.
 
 ## Demo: https://walletconnect-check.vercel.app
-## Demo @web3modal v2.4.4: https://walletconnect-244-check.chikhrai.xyz
 
 ## Packages used
- - `wagmi` / `@wagmi/core` v1.2.0
- - `viem` v1.0.7
- - `@web3modal/ethereum` / `@web3modal/react` v2.4.7
+ - `wagmi` / `@wagmi/core` v1.3.4
+ - `viem` v1.2.9
+ - `@web3modal/ethereum` / `@web3modal/react` v2.6.2
  - `react` v16.14.0
  - `webpack` v5.87.0
- - `typescript` v5.1.3
+ - `typescript` v5.1.6
 
 ## Available Scripts
 
